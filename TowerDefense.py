@@ -1,4 +1,8 @@
-import pygame, sys, time, math, random
+import pygame
+import sys
+import time
+import math
+import random
 from pygame.locals import *
 
 pygame.init()
@@ -26,11 +30,11 @@ def start():
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
-                sys.exit()
+                sys.exit(0)
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
                     pygame.quit()
-                    sys.exit()
+                    sys.exit(0)
                 if event.key == K_RETURN:
                     return 'main'
 
@@ -41,11 +45,11 @@ def start():
         
         text = Font.render('Brodie\'s Tower Defense! :)',True,WHITE)
         text_rect = text.get_rect()
-        text_rect.center = (W/2,H/8)
+        text_rect.center = (W / 2,H / 8)
         Surface.blit(text,text_rect)
         text = Font.render('Press Enter to Start a New Game',True,WHITE)
         text_rect = text.get_rect()
-        text_rect.center = (W/2,H/2)
+        text_rect.center = (W / 2,H / 2)
         Surface.blit(text,text_rect)
 
         pygame.display.flip()
@@ -61,7 +65,7 @@ def main():
         Surface.blit(text, text_rect)
 
     class Tower(object):
-        def __init__(self, pos, step=1, width = 40, height=40):
+        def __init__(self, pos, step=1, width=40, height=40):
             global color_list
             self.position = pos
             self.width = width
@@ -112,19 +116,19 @@ def main():
             self.width = width
             self.height = height
             self.color = color
-            self.rect = pygame.Rect(pos[0]-width/2,pos[1]-height/2,width,height)
+            self.rect = pygame.Rect(pos[0] - width / 2,pos[1] - height / 2,width,height)
             self.remove = False
         def update(self):
             end_x = self.end_x
             end_y = self.end_y
-            delta_x = float(end_x-self.start_x)
-            delta_y = float(end_y-self.start_y)
+            delta_x = float(end_x - self.start_x)
+            delta_y = float(end_y - self.start_y)
 
-            distance = math.sqrt(delta_x*delta_x + delta_y*delta_y)
+            distance = math.sqrt(delta_x * delta_x + delta_y * delta_y)
             if distance == 0:
                 distance = 1
-            self.rect.centerx = self.start_x + delta_x / distance *self.step
-            self.rect.centery = self.start_y + delta_y / distance *self.step
+            self.rect.centerx = self.start_x + delta_x / distance * self.step
+            self.rect.centery = self.start_y + delta_y / distance * self.step
 
             if self.rect.right < (0):
                 self.remove = True
@@ -146,18 +150,18 @@ def main():
             self.start_y = pos[1]
             self.width = width
             self.height = height
-            self.color = color_list[random.randint(0,len(color_list)-1)]
+            self.color = color_list[random.randint(0,len(color_list) - 1)]
             self.direction = direction
-            self.rect = pygame.Rect(pos[0]-width/2,pos[1]-height/2,width,height)
+            self.rect = pygame.Rect(pos[0] - width / 2,pos[1] - height / 2,width,height)
             self.remove = False
             #printself.rect.center
         def update(self):
             delta = 2
-            if self.rect.center == (self.start_x,H*5/6):
+            if self.rect.center == (self.start_x,H * 5 / 6):
                 self.direction = 'right'
-            if self.rect.center == (W*13/16,H*5/6):
+            if self.rect.center == (W * 13 / 16,H * 5 / 6):
                 self.direction = 'up'
-            if self.rect.center == (W*13/16,(-1*self.width/2)):
+            if self.rect.center == (W * 13 / 16,(-1 * self.width / 2)):
                 self.remove = True
                 #global escape_count
                 #escape_count += 1
@@ -213,11 +217,11 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
-                sys.exit()
+                sys.exit(0)
             if event.type == KEYUP:
                 if event.key == K_ESCAPE:
                     pygame.quit()
-                    sys.exit()
+                    sys.exit(0)
             if event.type == MOUSEBUTTONUP:
                 towers.append(Tower(event.pos,1))
 
@@ -252,8 +256,8 @@ def main():
 ##            bullet_timer_1 = time.time()
 
         enemy_timer_2 = time.time()
-        if (len(enemies) < 100) & (enemy_timer_2-enemy_timer_1 > .4):
-            enemies.append(Enemy((W*3/16,0),'down'))
+        if (len(enemies) < 100) & (enemy_timer_2 - enemy_timer_1 > .4):
+            enemies.append(Enemy((W * 3 / 16,0),'down'))
             enemy_timer_1 = time.time()
         
         Surface.fill(BLACK)
@@ -309,7 +313,7 @@ def main():
         pygame.display.flip()
         mainClock.tick(1000)
 
-if __name__=='__main__':
+if __name__ == '__main__':
     selection = start()
 
     if selection == 'main':

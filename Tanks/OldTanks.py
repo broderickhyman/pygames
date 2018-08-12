@@ -1,4 +1,8 @@
-import pygame, sys, random, math, time
+import pygame
+import sys
+import random
+import math
+import time
 from pygame.locals import *
 
 pygame.init()
@@ -25,11 +29,11 @@ DRIGHT = 3
 ULEFT = 7
 URIGHT = 9
 
-start_x = WINDOWWIDTH/2-5
-start_y = WINDOWHEIGHT-60
+start_x = WINDOWWIDTH / 2 - 5
+start_y = WINDOWHEIGHT - 60
 
 ground = pygame.Rect(0,WINDOWHEIGHT - 50,WINDOWWIDTH,50)
-player = pygame.Rect(WINDOWWIDTH/2-20, WINDOWHEIGHT-90, 40, 40)
+player = pygame.Rect(WINDOWWIDTH / 2 - 20, WINDOWHEIGHT - 90, 40, 40)
 bullet = pygame.Rect(-20, -20, 10, 10)
 power_minus = pygame.Rect(555, 25, 20, 20)
 power_plus = pygame.Rect(715, 25, 20, 20)
@@ -39,9 +43,9 @@ landpt = pygame.Rect(-20, -20, 10, 10)
 def rand_gen():
     random1 = random.randint(0,1)
     if random1 == 0:
-        random2 = random.randint(40,W/2 - 80)
+        random2 = random.randint(40,W / 2 - 80)
     if random1 == 1:
-        random2 = random.randint(W/2 + 80, W-40)
+        random2 = random.randint(W / 2 + 80, W - 40)
     return random2
 
 random_enemy_loc = rand_gen()
@@ -55,7 +59,7 @@ def blast():
     master_image = pygame.transform.scale(master_image, (560, 80))
     master_width, master_height = master_image.get_size()
     for i in range(0,7):
-        images.append(master_image.subsurface((i*80,0,80,80)))
+        images.append(master_image.subsurface((i * 80,0,80,80)))
     for i in range(0,6):
         windowSurface.blit(images[i],(centerx,centery))
         pygame.display.flip()
@@ -69,7 +73,6 @@ def text_print(text,color1,color2,left,top,font1=30):
     text_rect.left = left
     windowSurface.blit(text, text_rect)
     #return text,text_rect
-
 def enemy_angle_power_update():
     enemy_angle = random.randint(angle_min,angle_max)
     enemy_angle_x = math.cos(math.radians(enemy_angle - 180))
@@ -111,7 +114,7 @@ while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-            sys.exit()
+            sys.exit(0)
         if flying == False and enemy_flying == False:
             if event.type == MOUSEBUTTONUP:
                 mouse_x = event.pos[0]
@@ -121,7 +124,7 @@ while True:
                 elif power_plus.collidepoint(mouse_x,mouse_y):
                     power +=1
                 else:
-                    bullet = pygame.Rect(player.centerx-5, player.top + 30, 10, 10)
+                    bullet = pygame.Rect(player.centerx - 5, player.top + 30, 10, 10)
                     start_x,start_y,sec,flying,time1 = shooting_start()
 
         if event.type == KEYDOWN and flying == False:
@@ -148,14 +151,14 @@ while True:
                     power -=1
             if event.key == K_ESCAPE:
                 pygame.quit()
-                sys.exit()
+                sys.exit(0)
             if event.key == K_UP:
                 angle_up = False
             if event.key == K_DOWN:
                 angle_down = False
             if event.key == K_SPACE:
                 if flying == False and enemy_flying == False:
-                    bullet = pygame.Rect(player.centerx-5, player.top + 30, 10, 10)
+                    bullet = pygame.Rect(player.centerx - 5, player.top + 30, 10, 10)
                     start_x,start_y,sec,flying,time1 = shooting_start()
 
             if event.key == K_RETURN:
@@ -177,7 +180,7 @@ while True:
                 
             if event.key == K_p:
                 player_health = 100
-                player = pygame.Rect(W/2-20, H-90, 40, 40)
+                player = pygame.Rect(W / 2 - 20, H - 90, 40, 40)
                 aimer_x = angle_x * 50 + player.centerx - 5
                 aimer_y = angle_y * -50 + player.bottom - 10
                 aimer = pygame.Rect(aimer_x, aimer_y, 10, 10)
@@ -222,7 +225,7 @@ while True:
         aimer_x = angle_x * 50 + player.centerx - 5
         aimer_y = angle_y * -50 + player.bottom - 10
         aimer = pygame.Rect(aimer_x, aimer_y, 10, 10)
-        distance = ((power ** 2) * math.sin(math.radians(angle % 90 *2))) * 10
+        distance = ((power ** 2) * math.sin(math.radians(angle % 90 * 2))) * 10
         if angle_x < 0:
             distance = distance * -1
         landpt = pygame.Rect(player.centerx + int(distance) ,ground.top - 10,10,10)
@@ -231,7 +234,7 @@ while True:
         new_angle = angle
 
     if new_power != power:
-        distance = ((power ** 2) * math.sin(math.radians(angle % 90 *2))) * 10
+        distance = ((power ** 2) * math.sin(math.radians(angle % 90 * 2))) * 10
         if angle_x < 0:
             distance = distance * -1
         landpt = pygame.Rect(player.centerx + int(distance) ,ground.top - 10,10,10)
@@ -239,23 +242,23 @@ while True:
         
     if flying == True:
         time2 = time.time()
-        if (time2-time1) > .001:
+        if (time2 - time1) > .001:
             sec += 1
             time1 = time.time()
         move_x = angle_x * power * float(sec)
-        move_y = angle_y * power * float(sec) - 5 * (float(sec)/10) ** 2
+        move_y = angle_y * power * float(sec) - 5 * (float(sec) / 10) ** 2
         bullet.top = start_y - int(move_y)
-        bullet.left= start_x + int(move_x)
+        bullet.left = start_x + int(move_x)
 
     if enemy_flying == True:
         time2 = time.time()
-        if (time2-time1) > .001:
+        if (time2 - time1) > .001:
             sec += 1
             time1 = time.time()
-        move_x = enemy_angle_x * 10 * enemy_power * float(sec)/10
-        move_y = enemy_angle_y * 10 * enemy_power * float(sec)/10 - 5 * (float(sec)/10) ** 2
+        move_x = enemy_angle_x * 10 * enemy_power * float(sec) / 10
+        move_y = enemy_angle_y * 10 * enemy_power * float(sec) / 10 - 5 * (float(sec) / 10) ** 2
         bullet.top = start_y - int(move_y)
-        bullet.left= start_x + int(move_x)
+        bullet.left = start_x + int(move_x)
 
     if bullet.left > WINDOWWIDTH or bullet.right < 0:
         flying = False
@@ -272,14 +275,14 @@ while True:
             dist_x = enemy.centerx - bullet.centerx
             dist_y = enemy.centery - bullet.centery
             dist_mag = abs(float(dist_x))
-            damage = (60-dist_mag)/40 * 100
+            damage = (60 - dist_mag) / 40 * 100
             enemy_health = enemy_health - damage
             damage = 0
         if impact.colliderect(player):
             dist_x = player.centerx - bullet.centerx
             dist_y = player.centery - bullet.centery
             dist_mag = abs(float(dist_x))
-            damage = (60-dist_mag)/40 * 100
+            damage = (60 - dist_mag) / 40 * 100
             player_health = player_health - damage
             damage = 0
             #print 'damage:',damage
@@ -287,7 +290,7 @@ while True:
         bullet.top = WINDOWHEIGHT + 20
         bullet.left = WINDOWWIDTH + 20
         
-    if enemy.contains(bullet)and flying == True:
+    if enemy.contains(bullet) and flying == True:
         blast()
         flying = False
         bullet.top = WINDOWHEIGHT
@@ -296,7 +299,7 @@ while True:
         enemy_health = enemy_health - damage
         damage = 0
 
-    if player.contains(bullet)and enemy_flying == True:
+    if player.contains(bullet) and enemy_flying == True:
         blast()
         enemy_flying = False
         bullet.top = WINDOWHEIGHT
@@ -343,8 +346,8 @@ while True:
     text6 = 'Power:' + str(power)
     text7 = 'Angle:' + str(angle)
     text8 = '(C)heat?'
-    text_print(text, WHITE, RED, W-100, 0)
-    text_print(text2, WHITE, RED, W-245, 0)
+    text_print(text, WHITE, RED, W - 100, 0)
+    text_print(text2, WHITE, RED, W - 245, 0)
     text_print(text3, WHITE, BLUE, 50, 0)
     text_print(text4, BLACK, GREEN, 560, 25, 28)
     text_print(text5, BLACK, GREEN, 720, 25, 28)

@@ -1,4 +1,7 @@
-import pygame, sys, time, random
+import pygame
+import sys
+import time
+import random
 from pygame.locals import *
 
 pygame.init()
@@ -30,18 +33,18 @@ def text_print(text,color1,color2,left,top,Font=basicFont):
 
 class Tile(object):
     def __init__(self,left,top,column,row,sur=0,width=40,height=40,color=WHITE):
-        self.left=left
-        self.top=top
-        self.width=width
-        self.height=height
-        self.color=color
-        self.rect=pygame.Rect(left,top,width,height)
-        self.mine=False
-        self.flag=False
-        self.click=False
-        self.column=column
-        self.row=row
-        self.sur=sur
+        self.left = left
+        self.top = top
+        self.width = width
+        self.height = height
+        self.color = color
+        self.rect = pygame.Rect(left,top,width,height)
+        self.mine = False
+        self.flag = False
+        self.click = False
+        self.column = column
+        self.row = row
+        self.sur = sur
 
 def new_mines():
     for item in tile_list:
@@ -50,22 +53,22 @@ def new_mines():
         item.click = False
         item.flag = False
     for i in range(0,mines):
-        add=True
-        while (add==True):
+        add = True
+        while (add == True):
             row = random.randint(0,9)
             col = random.randint(1,9)
-            num=(row*10+col)
+            num = (row * 10 + col)
             if (tile_list[num].mine == False):
-                tile_list[num].mine=True
+                tile_list[num].mine = True
                 #tile_list[num].color=RED
-                add=False
+                add = False
     for item in tile_list:
         row = item.row
         col = item.column
         sur = 0
         for tile in tile_list:
-            if tile.row <= row+1 and tile.row >= row-1:
-                if tile.column <= col+1 and tile.column >= col-1:
+            if tile.row <= row + 1 and tile.row >= row - 1:
+                if tile.column <= col + 1 and tile.column >= col - 1:
                     if tile.mine == True:
                         sur += 1
         item.sur = sur
@@ -79,11 +82,11 @@ button = 99
 POS = (0,0)
 state = -1
 
-reset = pygame.Rect(W-100,0,100,50)
+reset = pygame.Rect(W - 100,0,100,50)
 
 for i in range(0,10):
     for j in range(0,10):
-        tile_list.append(Tile(65+i*42,100+j*42,i+1,j+1))
+        tile_list.append(Tile(65 + i * 42,100 + j * 42,i + 1,j + 1))
         
 new_mines()
         
@@ -92,11 +95,11 @@ while game == True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-            sys.exit()
+            sys.exit(0)
         if event.type == KEYUP:
             if event.key == K_ESCAPE:
                 pygame.quit()
-                sys.exit()
+                sys.exit(0)
         if event.type == MOUSEBUTTONUP:
             click = True
             button = event.button
@@ -166,18 +169,18 @@ while game == True:
                 col1 = YELLOW
             if item.sur > 4:
                 col1 = BLACK
-            text_print(str(item.sur),col1,WHITE,item.rect.centerx-8,item.rect.centery-10)
+            text_print(str(item.sur),col1,WHITE,item.rect.centerx - 8,item.rect.centery - 10)
             #text_print(str(item.row)+','+str(item.column),BLACK,WHITE,item.rect.left,item.rect.top)
 
 
-    text_print('Mines:'+str(mines),RED,BLACK,W/2-45,10)
-    text_print('RESET',BLACK,RED,reset.left+17,reset.top+13)
+    text_print('Mines:' + str(mines),RED,BLACK,W / 2 - 45,10)
+    text_print('RESET',BLACK,RED,reset.left + 17,reset.top + 13)
 
     if state == 0:
-        text_print('YOU WON!',RED,WHITE,W/2-55,50)
+        text_print('YOU WON!',RED,WHITE,W / 2 - 55,50)
     else:
         if state == 1:
-            text_print('You Lost... :(',RED,WHITE,W/2-55,50)
+            text_print('You Lost... :(',RED,WHITE,W / 2 - 55,50)
 
     #text_print(str(POS[0])+','+str(POS[1]),RED,BLACK,10,10)
 

@@ -1,4 +1,9 @@
-import pygame, sys, time, random, math, os
+import pygame
+import sys
+import time
+import random
+import math
+import os
 from pygame.locals import *
 
 pygame.init()
@@ -24,11 +29,11 @@ columns = 8
 enemy_list = []
 
 for i in range(0,enemies):
-    enemy_list.append(pygame.Rect(60*(i%columns)+20,i/columns*40 + 40,40,20))
+    enemy_list.append(pygame.Rect(60 * (i % columns) + 20,i / columns * 40 + 40,40,20))
 
-block = pygame.Rect(W/4-25, H*3/4, 50, 50)
-player = pygame.Rect(W/2-15, H*9/10, 30, 40)
-bullet = pygame.Rect(player.centerx-5, player.centery-10, 10, 20)
+block = pygame.Rect(W / 4 - 25, H * 3 / 4, 50, 50)
+player = pygame.Rect(W / 2 - 15, H * 9 / 10, 30, 40)
+bullet = pygame.Rect(player.centerx - 5, player.centery - 10, 10, 20)
 
 def text_print(text,color1,color2,left,top,font1=30,Font=basicFont):
     #Font = pygame.font.SysFont('Copperplate.ttc', font1)
@@ -58,11 +63,11 @@ while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-            sys.exit()
+            sys.exit(0)
         if event.type == KEYUP:
             if event.key == K_ESCAPE:
                 pygame.quit()
-                sys.exit()
+                sys.exit(0)
 
             if event.key == K_SPACE:
                 shooting_cont = False
@@ -100,7 +105,7 @@ while True:
             bullet.centerx = player.centerx
     
     time2 = time.time()
-    dif = time2-time1
+    dif = time2 - time1
     if dif > step_time:
         for item in enemy_list:
             if enemy_right:
@@ -110,8 +115,8 @@ while True:
         time1 = time.time()
 
     time4 = time.time()
-    dif2 = time4-time3
-    if dif2 > step_time/10 and shooting:
+    dif2 = time4 - time3
+    if dif2 > step_time / 10 and shooting:
         bullet.top -= 20
         if bullet.bottom < 0:
             bullet.center = player.center
@@ -120,7 +125,7 @@ while True:
         time3 = time.time()
 
     for item in enemy_list:
-        if item.right > W-20:
+        if item.right > W - 20:
             for item in enemy_list:
                 item.top += MOVEMENT * 2
                 item.left -= MOVEMENT

@@ -1,4 +1,8 @@
-import pygame, sys, time, math, random
+import pygame
+import sys
+import time
+import math
+import random
 from pygame.locals import *
 
 pygame.init()
@@ -44,7 +48,7 @@ class Star(object):
         else:
             if self.y < -75:
                 self.y += H + 100
-        if self.x < (0-self.width):
+        if self.x < (0 - self.width):
             self.x += W + 100
         self.rect.center = (self.x, self.y)
         
@@ -69,25 +73,25 @@ fps_timer = time.time()
 fps = 0
 speed = 10
 star_spawner = time.time()
-rows = H/100 + 2
-columns = W/100 + 1
+rows = int(H / 100 + 2)
+columns = int(W / 100 + 1)
 change_y = 0
 falling_y = change_y
 altitude = 500 * 0
 pause = False
 for i in range(0,rows):
     for j in range(0,columns):
-        stars.append(Star(j * 100 - 50, i *100 + 50))
+        stars.append(Star(j * 100 - 50, i * 100 + 50))
 
 while game == True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-            sys.exit()
+            sys.exit(0)
         if event.type == KEYUP:
             if event.key == K_ESCAPE:
                 pygame.quit()
-                sys.exit()
+                sys.exit(0)
             if event.key == K_RIGHT:
                 turn_right = False
             if event.key == K_LEFT:
@@ -108,7 +112,7 @@ while game == True:
     
 
     if pause == False:
-        change_x = math.cos(math.radians(degree))*speed
+        change_x = math.cos(math.radians(degree)) * speed
         if change_x < 5:
             if falling == False:
                 falling = True
@@ -118,14 +122,14 @@ while game == True:
             falling = False
             
         if falling == False:
-            change_y = math.sin(math.radians(degree))*speed
+            change_y = math.sin(math.radians(degree)) * speed
             if falling_y < change_y:
                 change_y = falling_y + .1
                 falling_y = change_y
             else:
                 falling_y = 100
         else:
-            falling_y = -2 * (time.time()-fall_time)
+            falling_y = -2 * (time.time() - fall_time)
             change_y = falling_y
 
         altitude += change_y
@@ -145,16 +149,16 @@ while game == True:
             #print degree
 
         if falling:
-            speed += -1 * float(degree) /1000
+            speed += -1 * float(degree) / 1000
         else:
-            speed += -1 * float(degree) /1000        
+            speed += -1 * float(degree) / 1000        
         if speed < 0:
             speed = 0
     
     plane2 = pygame.transform.rotate(plane, degree)
 
     Surface.fill(BLACK)
-    Surface.blit(plane2,(W/2-plane2.get_width()/2,H/2-plane2.get_height()/2))
+    Surface.blit(plane2,(W / 2 - plane2.get_width() / 2,H / 2 - plane2.get_height() / 2))
 
     for item in stars:
         item.draw()
@@ -166,13 +170,13 @@ while game == True:
         frame_counter = 0
         fps_timer = time.time()
 
-    text_print('FPS:' + str(int(fps)),GREEN,BLACK,0,H-30)
+    text_print('FPS:' + str(int(fps)),GREEN,BLACK,0,H - 30)
     text_print('Speed:' + str(speed),GREEN,BLACK,0,0)
     text_print('Degree:' + str(degree),GREEN,BLACK,0,25)
     text_print('Delta X:' + str(change_x),GREEN,BLACK,0,50)
     text_print('Delta y:' + str(change_y),GREEN,BLACK,0,75)
     text_print('Falling y:' + str(falling_y),GREEN,BLACK,0,100)
-    text_print('Altitude:' + str(altitude/500),GREEN,BLACK,0,125)
+    text_print('Altitude:' + str(altitude / 500),GREEN,BLACK,0,125)
     #pygame.draw.rect(Surface, BLUE, star)
     
     pygame.display.flip()

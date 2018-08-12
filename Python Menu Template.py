@@ -1,11 +1,12 @@
-import pygame, sys, time
+import pygame
+import sys
+import time
 from pygame.locals import *
 
 pygame.init()
 mainClock = pygame.time.Clock()
 #all_fonts = pygame.font.get_fonts()
 #Font = pygame.font.SysFont('arial', 20)
-
 W = 600
 H = 400
 
@@ -27,7 +28,6 @@ YELLOW = (255, 255, 0)
 ##    text_rect.top = top
 ##    text_rect.left = left
 ##    Surface.blit(text, text_rect)
-
 game = True
 mouse_pos = (0,0)
 mouse_click = (0,0)
@@ -40,11 +40,11 @@ while game == True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-            sys.exit()
+            sys.exit(0)
         if event.type == KEYUP:
             if event.key == K_ESCAPE:
                 pygame.quit()
-                sys.exit()
+                sys.exit(0)
         if event.type == MOUSEMOTION:
             mouse_pos = event.pos
         if event.type == MOUSEBUTTONUP:
@@ -62,7 +62,7 @@ while game == True:
         color = RED
     text = Font.render('One',True,color)
     text_rect = text.get_rect()
-    text_rect.center = (W/2,H/5)
+    text_rect.center = (W / 2,H / 5)
     if text_rect.collidepoint(mouse_click):
         output = '1'
     if text_rect.collidepoint(mouse_pos):
@@ -78,7 +78,7 @@ while game == True:
     Font = pygame.font.SysFont('arial', 40)
     text = Font.render('Two',True,color)
     text_rect = text.get_rect()
-    text_rect.center = (W/2,H*2/5)
+    text_rect.center = (W / 2,H * 2 / 5)
     if text_rect.collidepoint(mouse_click):
         output = '2'
     if text_rect.collidepoint(mouse_pos):
@@ -94,7 +94,7 @@ while game == True:
     Font = pygame.font.SysFont('arial', 40)
     text = Font.render('Three',True,color)
     text_rect = text.get_rect()
-    text_rect.center = (W/2,H*3/5)
+    text_rect.center = (W / 2,H * 3 / 5)
     if text_rect.collidepoint(mouse_click):
         output = '3'
     if text_rect.collidepoint(mouse_pos):
@@ -107,7 +107,7 @@ while game == True:
     Font = pygame.font.SysFont('arial', 40)
     text = Font.render(output,True,BLUE)
     text_rect = text.get_rect()
-    text_rect.center = (W/2,H*4/5)
+    text_rect.center = (W / 2,H * 4 / 5)
     Surface.blit(text, text_rect)
 
 

@@ -1,4 +1,8 @@
-import pygame, sys, time, math, random
+import pygame
+import sys
+import time
+import math
+import random
 from pygame.locals import *
 
 pygame.init()
@@ -35,7 +39,7 @@ class Coin(object):
         self.width = width
         self.height = height
         self.color = color
-        self.rect = pygame.Rect(self.start_x-width/2,self.start_y-height/2,width,height)
+        self.rect = pygame.Rect(self.start_x - width / 2,self.start_y - height / 2,width,height)
         self.remove = False
     def update(self):
         self.step += 1
@@ -49,8 +53,8 @@ class Coin(object):
 HEIGHT1 = 30
 
 ceiling = pygame.Rect(0,0,W,HEIGHT1)
-ground = pygame.Rect(0,H-HEIGHT1,W,HEIGHT1)
-player = pygame.Rect(50,H/2,40,80)
+ground = pygame.Rect(0,H - HEIGHT1,W,HEIGHT1)
+player = pygame.Rect(50,H / 2,40,80)
 
 game = True
 pause = False
@@ -66,16 +70,15 @@ coins = []
 coin_removal = []
 VERTICAL_SPEED = 8
 #coins.append(Coin(W,H/2))
-
 while game == True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-            sys.exit()
+            sys.exit(0)
         if event.type == KEYUP:
             if event.key == K_ESCAPE:
                 pygame.quit()
-                sys.exit()
+                sys.exit(0)
             if event.key == K_p:
                 if pause:
                     pause = False
@@ -85,7 +88,7 @@ while game == True:
             if event.key == pygame.K_w:
                 if event.mod & pygame.KMOD_LMETA:
                     pygame.quit()
-                    sys.exit()
+                    sys.exit(0)
         if event.type == MOUSEBUTTONDOWN:
             falling = False
             lifting = True
@@ -110,16 +113,16 @@ while game == True:
     distance += .1
 
     if distance > 10:
-        rand1 = random.randint(50,H-50)
+        rand1 = random.randint(50,H - 50)
         rand2 = random.randint(1,10)
         rand3 = random.randint(1,5)
         for i in range(0,rand2):
             for j in range(0,rand3):
-                coins.append(Coin(W+i*20,rand1 + j * 20))
+                coins.append(Coin(W + i * 20,rand1 + j * 20))
         distance = 0
 
     time2 = time.time()
-    time_dif = time2-time1
+    time_dif = time2 - time1
     if falling:
         change_y = change_y + 15 * time_dif
         time1 = time.time()
@@ -136,8 +139,8 @@ while game == True:
 
     player.top += change_y
 
-    if player.bottom > H-HEIGHT1:
-         player.bottom = H-HEIGHT1
+    if player.bottom > H - HEIGHT1:
+         player.bottom = H - HEIGHT1
          change_y = 0
     else:
         if player.top < HEIGHT1:
